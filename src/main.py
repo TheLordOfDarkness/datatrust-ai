@@ -7,6 +7,7 @@ from checks.validity import check_email_validity
 from report_generator import generate_html_report
 from profiling import profile_dataset
 from recommendations import generate_recommendations
+from quality_score import quality_status
 
 df = pd.read_csv("data/sample.csv")
 profile = profile_dataset(df)
@@ -30,7 +31,7 @@ recommendations = generate_recommendations(
     uniqueness_results,
     email_validity_result
 )
-
+status = quality_status(global_score)
 print("\n====================")
 print("DATA QUALITY REPORT")
 print("====================")
@@ -54,5 +55,6 @@ generate_html_report(
     uniqueness=uniqueness_results,
     email_validity=email_validity_result,
     profile=profile,
-    recommendations=recommendations
+    recommendations=recommendations,
+    status=status
 )

@@ -18,3 +18,15 @@ def calculate_score(
     score -= validity_result["invalid_pct"] * 0.5
 
     return round(max(score, 0), 2)
+def quality_status(score):
+
+    if score >= 90:
+        return "Excellent"
+
+    if score >= 80:
+        return "Good"
+
+    if score >= 70:
+        return "Needs Improvement"
+
+    return "Critical"
