@@ -1,12 +1,21 @@
 import pandas as pd
 
 from checks.completeness import check_completeness
+from checks.uniqueness import check_uniqueness
 
 df = pd.read_csv("data/sample.csv")
 
-results = check_completeness(df)
+completeness_results = check_completeness(df)
+uniqueness_results = check_uniqueness(df)
 
-print("\n=== COMPLETENESS REPORT ===\n")
+print("\n====================")
+print("DATA QUALITY REPORT")
+print("====================\n")
 
-for result in results:
+print("COMPLETENESS")
+for result in completeness_results:
+    print(result)
+
+print("\nUNIQUENESS")
+for result in uniqueness_results:
     print(result)
