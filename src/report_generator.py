@@ -7,6 +7,7 @@ def generate_html_report(
     uniqueness,
     email_validity,
     profile,
+    recommendations,
     output_path="reports/report.html"
 ):
     env = Environment(loader=FileSystemLoader("templates"))
@@ -17,7 +18,8 @@ def generate_html_report(
         completeness=completeness,
         uniqueness=uniqueness,
         email_validity=email_validity,
-        profile=profile
+        profile=profile,
+        recommendations=recommendations
     )
 
     with open(output_path, "w", encoding="utf-8") as file:

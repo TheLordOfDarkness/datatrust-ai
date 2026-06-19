@@ -6,6 +6,7 @@ from checks.uniqueness import check_uniqueness
 from checks.validity import check_email_validity
 from report_generator import generate_html_report
 from profiling import profile_dataset
+from recommendations import generate_recommendations
 
 df = pd.read_csv("data/sample.csv")
 profile = profile_dataset(df)
@@ -19,6 +20,12 @@ email_validity_result = check_email_validity(
     column_name="email"
 )
 global_score = calculate_score(
+    completeness_results,
+    uniqueness_results,
+    email_validity_result
+)
+recommendations = generate_recommendations(
+    global_score,
     completeness_results,
     uniqueness_results,
     email_validity_result
@@ -46,5 +53,6 @@ generate_html_report(
     completeness=completeness_results,
     uniqueness=uniqueness_results,
     email_validity=email_validity_result,
-    profile=profile
+    profile=profile,
+    recommendations=recommendations
 )

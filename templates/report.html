@@ -9,7 +9,12 @@
     <h2>Data Quality Report</h2>
 
     <h3>Global Score: {{ global_score }}/100</h3>
-    
+    <h3>Recommendations</h3>
+        <ul>
+        {% for recommendation in recommendations %}
+        <li>{{ recommendation }}</li>
+        {% endfor %}
+    </ul>
     <h3>Dataset Profile</h3>
     <ul>
         <li>Rows : {{ profile.row_count }}</li>
