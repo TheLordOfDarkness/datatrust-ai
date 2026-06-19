@@ -1,12 +1,23 @@
-def check_uniqueness(df):
+def check_uniqueness(df, key_columns):
+
     results = []
+
     total_rows = len(df)
 
-    for column in df.columns:
-        duplicate_count = df[column].duplicated().sum()
+    for column in key_columns:
+
+        duplicate_count = (
+            df[column]
+            .duplicated()
+            .sum()
+        )
 
         duplicate_pct = float(
-            round((duplicate_count / total_rows) * 100, 2)
+            round(
+                duplicate_count /
+                total_rows * 100,
+                2
+            )
         )
 
         results.append({

@@ -6,7 +6,10 @@ from checks.uniqueness import check_uniqueness
 df = pd.read_csv("data/sample.csv")
 
 completeness_results = check_completeness(df)
-uniqueness_results = check_uniqueness(df)
+uniqueness_results = check_uniqueness(
+    df,
+    key_columns=["customer_id"]
+)
 
 print("\n====================")
 print("DATA QUALITY REPORT")
