@@ -12,6 +12,7 @@ from src.profiling import profile_dataset
 from src.quality_score import calculate_score, quality_status
 from src.recommendations import generate_recommendations
 from src.report_generator import generate_html_report
+from src.schema_detector import detect_key_columns, detect_email_columns
 
 
 app = FastAPI(
@@ -51,24 +52,23 @@ async def analyze_file(
 
     completeness_results = check_completeness(df)
 
-    key_columns = []
-
-    if "customer_id" in df.columns:
-        key_columns.append("customer_id")
+    key_columns = detect_key_columns(df)
 
     uniqueness_results = check_uniqueness(
         df,
         key_columns=key_columns
     )
 
-    if "email" in df.columns:
+    email_columns = detect_email_columns(df)
+
+    if email_columns:
         email_validity_result = check_email_validity(
             df,
-            column_name="email"
+            column_name=email_columns[0]
         )
     else:
         email_validity_result = {
-            "column": "email",
+            "column": "N/A",
             "invalid_count": 0,
             "invalid_pct": 0.0
         }
