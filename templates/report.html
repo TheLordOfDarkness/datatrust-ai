@@ -1,41 +1,236 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>DataTrust AI - Data Quality Report</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 32px;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: auto;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #ffffff, #eef4ff);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+
+        .brand {
+            font-size: 34px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #475569;
+            margin-bottom: 22px;
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .score {
+            font-size: 52px;
+            font-weight: 800;
+            color: #2563eb;
+            line-height: 1;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #fff7ed;
+            color: #c2410c;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 22px;
+            color: #111827;
+        }
+
+        .metric {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .recommendations li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        table th {
+            background-color: #2563eb;
+            color: white;
+            text-align: left;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        table td {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 800px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score {
+                font-size: 42px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>DataTrust AI</h1>
-    <h2>Data Quality Report</h2>
 
-    <h3>Global Score: {{ global_score }}/100</h3>
-    <h3>Quality Status: {{ status }}</h3>
-    <h3>Recommendations</h3>
-        <ul>
-        {% for recommendation in recommendations %}
-        <li>{{ recommendation }}</li>
-        {% endfor %}
-    </ul>
-    <h3>Dataset Profile</h3>
-    <ul>
-        <li>Rows : {{ profile.row_count }}</li>
-        <li>Columns : {{ profile.column_count }}</li>
-    </ul>
-    <h3>Completeness</h3>
-    <ul>
-        {% for item in completeness %}
-        <li>{{ item.column }} : {{ item.missing_pct }}% missing</li>
-        {% endfor %}
-    </ul>
+<div class="container">
 
-    <h3>Uniqueness</h3>
-    <ul>
-        {% for item in uniqueness %}
-        <li>{{ item.column }} : {{ item.duplicate_pct }}% duplicates</li>
-        {% endfor %}
-    </ul>
+    <div class="header-card">
+        <div class="brand">🚀 DataTrust AI</div>
+        <div class="subtitle">Automated Data Quality Report</div>
 
-    <h3>Email Validity</h3>
-    <p>{{ email_validity.column }} : {{ email_validity.invalid_pct }}% invalid</p>
+        <div class="score-row">
+            <div class="score">{{ global_score }}/100</div>
+            <div class="status">{{ status }}</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>📊 Dataset Profile</h2>
+            <p class="metric"><strong>Rows:</strong> {{ profile.row_count }}</p>
+            <p class="metric"><strong>Columns:</strong> {{ profile.column_count }}</p>
+        </div>
+
+        <div class="card">
+            <h2>⚠ Recommendations</h2>
+            <ul class="recommendations">
+                {% for recommendation in recommendations %}
+                <li>{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Completeness</h2>
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Missing Count</th>
+                <th>Missing %</th>
+            </tr>
+            {% for item in completeness %}
+            <tr>
+                <td>{{ item.column }}</td>
+                <td>{{ item.missing_count }}</td>
+                <td>{{ item.missing_pct }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Uniqueness</h2>
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Duplicate Count</th>
+                <th>Duplicate %</th>
+            </tr>
+            {% for item in uniqueness %}
+            <tr>
+                <td>{{ item.column }}</td>
+                <td>{{ item.duplicate_count }}</td>
+                <td>{{ item.duplicate_pct }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Email Validity</h2>
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Invalid Count</th>
+                <th>Invalid %</th>
+            </tr>
+            <tr>
+                <td>{{ email_validity.column }}</td>
+                <td>{{ email_validity.invalid_count }}</td>
+                <td>{{ email_validity.invalid_pct }}%</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Generated by DataTrust AI — Data Quality Engine
+    </div>
+
+</div>
+
 </body>
 </html>
