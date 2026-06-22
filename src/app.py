@@ -51,15 +51,27 @@ async def analyze_file(
 
     completeness_results = check_completeness(df)
 
+    key_columns = []
+
+    if "customer_id" in df.columns:
+        key_columns.append("customer_id")
+
     uniqueness_results = check_uniqueness(
         df,
-        key_columns=["customer_id"]
+        key_columns=key_columns
     )
 
-    email_validity_result = check_email_validity(
-        df,
-        column_name="email"
-    )
+    if "email" in df.columns:
+        email_validity_result = check_email_validity(
+            df,
+            column_name="email"
+        )
+    else:
+        email_validity_result = {
+            "column": "email",
+            "invalid_count": 0,
+            "invalid_pct": 0.0
+        }
 
     global_score = calculate_score(
         completeness_results,
