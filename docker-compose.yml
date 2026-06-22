@@ -1,0 +1,9 @@
+services:
+  datatrust-ai:
+    build: .
+    container_name: datatrust-ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./reports:/app/reports
