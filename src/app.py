@@ -64,3 +64,17 @@ async def analyze_file(
             "status": analysis["status"]
         }
     )
+
+
+@app.post("/api/analyze")
+async def analyze_file_api(file: UploadFile = File(...)):
+    os.makedirs("uploads", exist_ok=True)
+
+    file_path = f"uploads/{file.filename}"
+
+    with open(file_path, "wb") as buffer:
+        buffer.write(await file.read())
+
+    analysis = analyze_dataset(file_path)
+
+    return analysis

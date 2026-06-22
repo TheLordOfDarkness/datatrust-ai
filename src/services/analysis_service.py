@@ -13,53 +13,45 @@ def analyze_dataset(file_path: str) -> dict:
     df = pd.read_csv(file_path)
 
     profile = profile_dataset(df)
-
-    completeness_results = check_completeness(df)
+    completeness = check_completeness(df)
 
     key_columns = detect_key_columns(df)
-
-    uniqueness_results = check_uniqueness(
-        df,
-        key_columns=key_columns
-    )
+    uniqueness = check_uniqueness(df, key_columns=key_columns)
 
     email_columns = detect_email_columns(df)
 
     if email_columns:
-        email_validity_result = check_email_validity(
-            df,
-            column_name=email_columns[0]
-        )
+        email_validity = check_email_validity(df, column_name=email_columns[0])
     else:
-        email_validity_result = {
+        email_validity = {
             "column": "N/A",
             "invalid_count": 0,
             "invalid_pct": 0.0
         }
 
     global_score = calculate_score(
-        completeness_results,
-        uniqueness_results,
-        email_validity_result
+        completeness,
+        uniqueness,
+        email_validity
     )
 
     status = quality_status(global_score)
 
     recommendations = generate_recommendations(
         global_score,
-        completeness_results,
-        uniqueness_results,
-        email_validity_result
+        completeness,
+        uniqueness,
+        email_validity
     )
 
     return {
         "profile": profile,
-        "completeness": completeness_results,
-        "uniqueness": uniqueness_results,
-        "email_validity": email_validity_result,
+        "completeness": completeness,
+        "uniqueness": uniqueness,
+        "email_validity": email_validity,
         "global_score": global_score,
         "status": status,
         "recommendations": recommendations,
-        "detected_keys": key_columns,
+        "detected_key_columns": key_columns,
         "detected_email_columns": email_columns
     }
