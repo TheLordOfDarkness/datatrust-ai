@@ -7,12 +7,14 @@ from src.profiling import profile_dataset
 from src.quality_score import calculate_score, quality_status
 from src.recommendations import generate_recommendations
 from src.schema_detector import detect_key_columns, detect_email_columns
-
+from src.column_profiler import profile_columns
 
 def analyze_dataset(file_path: str) -> dict:
     df = pd.read_csv(file_path)
 
     profile = profile_dataset(df)
+    column_profiles = profile_columns(df)
+
     completeness = check_completeness(df)
 
     key_columns = detect_key_columns(df)
@@ -53,5 +55,6 @@ def analyze_dataset(file_path: str) -> dict:
         "status": status,
         "recommendations": recommendations,
         "detected_key_columns": key_columns,
-        "detected_email_columns": email_columns
+        "detected_email_columns": email_columns,
+        "column_profiles": column_profiles
     }

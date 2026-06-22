@@ -173,7 +173,32 @@
             </ul>
         </div>
     </div>
+    <div class="card">
+        <h2>Column Profiling</h2>
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Type</th>
+                <th>Null %</th>
+                <th>Distinct Values</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Mean</th>
+            </tr>
 
+            {% for item in column_profiles %}
+            <tr>
+                <td>{{ item.column }}</td>
+                <td>{{ item.dtype }}</td>
+                <td>{{ item.null_pct }}%</td>
+                <td>{{ item.distinct_count }}</td>
+                <td>{{ item.min }}</td>
+                <td>{{ item.max }}</td>
+                <td>{{ item.mean }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+</div>
     <div class="card">
         <h2>Completeness</h2>
         <table>

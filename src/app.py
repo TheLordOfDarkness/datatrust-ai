@@ -48,7 +48,8 @@ async def analyze_file(
         email_validity=analysis["email_validity"],
         profile=analysis["profile"],
         recommendations=analysis["recommendations"],
-        status=analysis["status"]
+        status=analysis["status"],
+        column_profiles=analysis["column_profiles"]
     )
 
     return templates.TemplateResponse(
@@ -61,7 +62,8 @@ async def analyze_file(
             "email_validity": analysis["email_validity"],
             "profile": analysis["profile"],
             "recommendations": analysis["recommendations"],
-            "status": analysis["status"]
+            "status": analysis["status"],
+            "column_profiles": analysis["column_profiles"]
         }
     )
 
