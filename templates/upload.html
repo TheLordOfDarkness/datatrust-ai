@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DataTrust AI - Upload Dataset</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 40px;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 80px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #475569;
+            font-size: 18px;
+        }
+
+        input[type="file"] {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 12px;
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .hint {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🚀 DataTrust AI</h1>
+
+    <p>Upload a CSV file and generate an automated Data Quality Report.</p>
+
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <br>
+        <button type="submit">Analyze Dataset</button>
+    </form>
+
+    <div class="hint">
+        Supported format: CSV
+    </div>
+</div>
+
+</body>
+</html>

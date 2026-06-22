@@ -1,0 +1,7 @@
+customer_id,name,email,age
+1,Taha,taha@gmail.com,35
+2,Ahmed,,40
+3,Sara,sara@gmail.com,28
+3,Sara,sara@gmail.com,28
+4,Youssef,test,150
+5,,user@gmail.com,30
